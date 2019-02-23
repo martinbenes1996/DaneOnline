@@ -1,16 +1,27 @@
 
 import urllib.request
 import json
-import os, ssl
+import os
+
+# ssl
+import ssl
 if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
     getattr(ssl, '_create_unverified_context', None)): 
     ssl._create_default_https_context = ssl._create_unverified_context
+
 import re
+
+# flask
 from flask import Flask
 from flask import render_template, abort
 app = Flask(__name__)
 
+# psc
+import sys
+sys.path.insert(0, './static')
 import psc
+
+
 
 @app.route("/")
 def index():
@@ -168,13 +179,7 @@ def address_checkAddress(cityCode, streetName, houseNumber):
                             return "OK"
 
     abort(404)
-
-
     
-
-
-
-
 @app.route("/address/getRegions")
 def address_getRegions():
     jsonRegions = urllib.request.urlopen('https://b2c.cpost.cz/services/Address/getRegionListAsJson').read()
@@ -189,23 +194,4 @@ def address_getDistricts(regionId):
 def address_getLocation(cityCode):
     d = { 'name' : address_getCityName(cityCode), 'region' : json.loads(address_getRegion(cityCode))['name'] }
     return json.dumps(d)
-
-@app.route("/profile/<username>")
-def show_user_profile(username):
-    return "User %s." % username
-
-@app.route("/post/<int:post_id>")
-def show_post_id(post_id):
-    return "Post %d." % post_id
-
-@app.route("/path/<path:subpath>")
-def show_subpath(subpath):
-    return "Subpath %s." % subpath
-
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        return do_the_login()
-    else:
-        return show_the_login_form()
 

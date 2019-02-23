@@ -116,36 +116,6 @@
         }
     }
 
-    $('#inputID').blur(function() { checkID(); });
-
-    function setCityName(cityCode) {
-        $.ajax({
-            url: "/address/getCityName/" + cityCode,
-            dataType: "text",
-            success: function(data) {
-                $("#inputCity").prop("placeholder", data);
-                inputOk( $("#inputZip") );
-            },
-            error: function(xhr, status, error) {
-                console.log("Error: setCityName");
-                inputError( $("#inputZip") );
-            }
-        });
-    }
-    function setRegion(cityCode) {
-        $.ajax({
-            url: "/address/getRegion/" + cityCode,
-            dataType: "text",
-            success: function(data) {
-                $("#inputRegion").prop("placeholder", data);
-                inputOk( $("#inputZip") );
-            },
-            error: function(xhr, status, error) {
-                console.log("Error: setRegion");
-                inputError( $("#inputZip") );
-            }
-        });
-    }
     function setLocation(cityCode) {
         
         $(".city_loading").show();
@@ -165,6 +135,13 @@
             }
         });
     }
+
+    $("#inputName").blur(function(){ inputOk_notEmpty($(this)); });
+    $("#inputSurname").blur(function(){ inputOk_notEmpty($(this)); });
+    $("#inputSurname2").blur(function(){ inputOk_notEmpty($(this)); });
+    $('#inputID').blur(function() { checkID(); });
+    $("#inputEmail").blur(function(){ checkEmail(); });
+    $("#inputPhone").blur(function(){ checkPhone(); });
 
     function checkName() {
         inputOk_notEmpty( $("#inputName") );
@@ -190,22 +167,28 @@
 
 
     function checkAddress() {
+        // empty address
         if( $("#inputStreet").val() == "" ) { return; }
         else if( $("#inputHouseNumber").val() == "" ) { return; }
         else if( $("#inputZip").val() == "" ) { return; }
+        // invalid zip
         else if( ! $.isNumeric( parseInt($("#inputZip").val()) ) ) {
             inputError( $("#inputZip") );
         }
+        // ok
         else {
             $(".address_loading").show();
+            // check
             $.ajax({
                 url: "/address/check/" + $("#inputZip").val() + "/" + $("#inputStreet").val() + "/" + $("#inputHouseNumber").val(),
                 dataType: "text",
+                // ok
                 success: function(data) {
                     $(".address_loading").hide();
                     inputOk( $("#inputStreet") );
                     inputOk( $("#inputHouseNumber") );
                 },
+                // error
                 error: function(xhr, status, error) {
                     $(".address_loading").hide();
                     inputError( $("#inputStreet") );
@@ -216,14 +199,17 @@
     }
 
     function checkEmail() {
+        // parse email
         email = $("#inputEmail").val();
+
+        // empty
         if( email == "" ) { 
             inputClear( $('#inputEmail') );
             return;
         }
 
         $(".email_loading").show();
-
+        // check email
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         if( !regex.test(email) ) {
             setTimeout(function() {
@@ -232,7 +218,7 @@
             }, 500);
             return;
         }
-
+        // ok
         setTimeout(function() {
             $(".email_loading").hide();
             inputOk( $("#inputEmail") );
@@ -240,16 +226,20 @@
     }
 
     function checkPhone() {
-        $(".phone_loading").show();
-
+        // parse phone
         phone = $("#inputPhone").val();
+
+        // empty phone
         if( phone == "" ) {
+            $(".phone_loading").hide();
             inputClear( $("#inputPhone") );
             return;
         }
 
+        $(".phone_loading").show();
+        // clear spaces
         var phone_cl = phone.replace(/ /g,'');
-
+        // check phone
         var phone_regex = /^(\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$/;
         if( !phone_regex.test(phone_cl) ) {
             setTimeout(function() {
@@ -258,14 +248,14 @@
             }, 500);
             return;
         }
-
+        // format phone
         var phone_out;
         if( phone_cl.slice(0,1) == "+" ) {
             phone_out = phone_cl.slice(0,4) + " " + phone_cl.slice(4,7) + " " + phone_cl.slice(7,10) + " " + phone_cl.slice(10,13);
         } else {
             phone_out = "+420 " + phone_cl.slice(0,3) + " " + phone_cl.slice(3,6) + " " + phone_cl.slice(6,9)
         }
-
+        // ok
         setTimeout(function() {
             $("#inputPhone").val(phone_out);
             $(".phone_loading").hide();
@@ -278,12 +268,7 @@
         else { inputClear( element ); }
     }
 
-    $("#inputName").blur(function(){ inputOk_notEmpty($(this)); });
-    $("#inputSurname").blur(function(){ inputOk_notEmpty($(this)); });
-    $("#inputSurname2").blur(function(){ inputOk_notEmpty($(this)); });
-
-    $("#inputEmail").blur(function(){ checkEmail(); });
-    $("#inputPhone").blur(function(){ checkPhone(); });
+    
 
     $("#inputSurname").blur(function(){
         if($("#inputSurname2").val() == "") {
@@ -291,13 +276,9 @@
         }
     });
 
-    $("#inputStreet").blur(function(){
-        checkAddress();
-    });
+    $("#inputStreet").blur(function(){ checkAddress(); });
 
-    $("#inputHouseNumber").blur(function(){
-        checkAddress();
-    });
+    $("#inputHouseNumber").blur(function(){ checkAddress(); });
 
     $("#inputZip").blur(function() {
         cityCode = parseInt( $(this).val() );
