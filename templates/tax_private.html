@@ -1,0 +1,398 @@
+
+{% extends "page.html" %}
+
+{% block Title %}Osobní přiznání{% endblock %}
+
+{% block Imports %}{% endblock %}
+
+{% block Content %}
+<div class="row">
+    <div class="col text-center">
+        <h2>Osobní daňové přiznání</h2>
+    </div>
+</div>
+<div class="row text-center tax_progressbar">
+    <div class="col">
+        <a href="/osobni/1" class="tax_progressbar_item {% if pagenum > 1 %}tax_progressbar_item_done{% else %}tax_progressbar_item_active{% endif %}">Základní informace</a>
+    </div>
+    <div class="col"><h5>></h5></div>
+    <div class="col">
+        <a href="/osobni/2" class="tax_progressbar_item {% if pagenum > 2 %}tax_progressbar_item_done{% elif pagenum < 2 %}tax_progressbar_item_todo{% else %}tax_progressbar_item_active{% endif %}">Zaměstnání</a>
+    </div>
+    <div class="col"><h5>></h5></div>
+    <div class="col">
+        <a href="/osobni/3" class="tax_progressbar_item {% if pagenum < 3 %}tax_progressbar_item_todo{% else %}tax_progressbar_item_active{% endif %}">Dokončení</a>
+    </div>
+</div>
+
+
+{% if pagenum == 1 %}
+<!-- Zakladni informace -->
+
+<div class="row tax_form">
+    <div class="col">
+        <form action="/osobni/2">
+
+
+            <!-- Jmeno -->
+            <div><h4>Jméno</h4></div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputName">Křestní jméno</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="Jana">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputSurname">Příjmení</label>
+                    <input type="text" class="form-control" id="inputSurname" placeholder="Nováková">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputSurname2">Rodné příjmení</label>
+                    <input type="text" class="form-control" id="inputSurname2" placeholder="Svobodová">
+                </div>
+            </div>
+            <div class="form-row id_loading" style="display: none">
+                <strong>Ověřuji rodné číslo...</strong>
+                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="inputID">Rodné číslo</label>
+                    <input type="text" class="form-control" id="inputID" placeholder="685523/5167">
+                </div>
+                
+            </div>
+
+
+            <!-- Adresa -->
+            <div>
+                <hr>
+                <h4>Adresa</h4>
+            </div>
+            <div class="form-row address_loading" style="display: none">
+                    <strong>Ověřuji adresu...</strong>
+                    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-8">
+                    <label for="inputStreet">Ulice</label>
+                    <input type="text" class="form-control" id="inputStreet" placeholder="Masarykova">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputHouseNumber">Číslo popisné</label>
+                    <input type="text" class="form-control" id="inputHouseNumber" placeholder="7">
+                </div>
+            </div>
+            <div class="form-row city_loading" style="display: none">
+                    <strong>Ověřuji PSČ v poštovní databázi...</strong>
+                    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="inputZip">PSČ</label>
+                    <input type="text" class="form-control" id="inputZip" placeholder="60100">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputCity">Město</label>
+                    <input type="text" class="form-control" id="inputCity" placeholder="Brno" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputRegin">Kraj</label>
+                    <input type="text" class="form-control" id="inputRegion" placeholder="Jihomoravský" readonly>
+                </div>
+            </div>
+
+
+            <!-- Kontakt -->
+            <div>
+                <hr>
+                <h4>Kontaktní údaje</h4>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6 email_loading" style="display: none">    
+                    <strong>Ověřuji emailovou adresu...</strong>
+                    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                </div>
+                <div class="form-group col-md-6 phone_loading" style="display: none"></div>
+                <div class="form-group col-md-6 phone_loading" style="display: none">    
+                    <strong>Ověřuji mobilní číslo...</strong>
+                    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputEmail">E-mail</label>
+                    <input type="text" class="form-control" id="inputEmail" placeholder="jana.novakova@seznam.cz">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPhone">Telefon</label>
+                    <input type="text" class="form-control" id="inputPhone" placeholder="+420 654 987 321">
+                </div>
+            </div>
+
+
+            <!-- Slevy -->
+            <div>
+                <hr>
+                <h4>Slevy na dani</h4>
+                <p>V minulém roce (alespoň část roku) jsem byl<span class="femaleSuffix_a"></span></p>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="inputStudent">
+                <label class="form-check-label" for="inputStudent" id="labelStudent">Student</label>
+            </div>
+            <div class="form-row" id="studentInfo" style="display: none">
+                <div class="form-check col-md-1"></div>
+                <div class="form-check col-md-2">
+                    <input class="form-check-input" type="checkbox" value="" id="inputStudentWholeYear" checked>
+                    <label class="form-check-label" for="inputStudentWholeYear">Celý rok</label>
+                </div>
+                <div class="form-check col-md-1"></div>
+                <div class="form-check col-md-7" style="display: none" id="studentDateRange">
+                    <div class="form-check-inline col-md-5">
+                        <label for="inputStudentFrom" class="form-check-label">Od&nbsp;&nbsp;</label>
+                        <input type="text" class="form-control" id="inputStudentFrom" name="inputStudentFrom">
+                    </div>
+                    <div class="form-check-inline col-md-5">
+                            <label for="inputStudentTo" class="form-check-label">Do&nbsp;&nbsp;</label>
+                        <input type="text" class="form-control" id="inputStudentTo" name="inputStudentTo">
+                    </div>
+                </div>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="inputRetired">
+                <label class="form-check-label" for="inputRetired" id="labelRetired">Důchodce</label>
+            </div>
+            <div class="form-row" id="retiredInfo" style="display: none">
+                <div class="form-check col-md-1"></div>
+                <div class="form-check col-md-2">
+                    <input class="form-check-input" type="checkbox" value="" id="inputRetiredWholeYear" checked>
+                    <label class="form-check-label" for="inputRetiredWholeYear">Celý rok</label>
+                </div>
+                <div class="form-check col-md-1"></div>
+                <div class="form-check col-md-7" style="display: none" id="retiredDateRange">
+                    <div class="form-check-inline col-md-5">
+                        <label for="inputRetiredFrom" class="form-check-label">Od&nbsp;&nbsp;</label>
+                        <input type="text" class="form-control" id="inputRetiredFrom" name="inputRetiredFrom">
+                    </div>
+                    <div class="form-check-inline col-md-5">
+                            <label for="inputRetiredTo" class="form-check-label">Do&nbsp;&nbsp;</label>
+                        <input type="text" class="form-control" id="inputRetiredTo" name="inputRetiredTo">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="inputMarried">
+                <label class="form-check-label" for="inputMarried" id="labelMarried">Ženatý / vdaná</label>
+            </div>
+
+            <div class="form-group" id="marriedInfo" style="display: none">
+                <br>
+                <div>
+                    <h4>Manžel / ka</h4>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputName">Křestní jméno</label>
+                        <input type="text" class="form-control" id="inputName" placeholder="Jana">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputSurname">Příjmení</label>
+                        <input type="text" class="form-control" id="inputSurname" placeholder="Nováková">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputSurname2">Rodné příjmení</label>
+                        <input type="text" class="form-control" id="inputSurname2" placeholder="Svobodová">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputID">Rodné číslo</label>
+                        <input type="text" class="form-control" id="inputID" placeholder="685523/5167">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-1"></div>
+                    <div class="form-group col-md-2">
+                        <input class="form-check-input" type="checkbox" value="" id="inputMarriedWholeYear" checked>
+                        <label class="form-check-label" for="inputMarriedWholeYear">Po celý rok</label>
+                    </div>
+                    <div class="form-group col-md-7" style="display: none" id="marriedDateRange">
+                        <div class="form-check-inline col-md-5">
+                            <label for="inputMarriedFrom" class="form-check-label">Od&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" id="inputMarriedFrom" name="inputMarriedFrom">
+                        </div>
+                        <div class="form-check-inline col-md-5">
+                            <label for="inputMarriedFrom" class="form-check-label">Do&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" id="inputMarriedFrom" name="inputMarriedFrom">
+                        </div>
+                    </div>
+                </div>
+                
+                <hr>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="inputDonor">
+                <label class="form-check-label" for="inputDonor" id="labelDonor">Dárce krve</label>
+            </div>
+            <div class="form-group" id="donorInfo" style="display: none">
+                <div class="form-check col-md-1"></div>
+                <div class="form-check col-md-4">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount1" value="donorCount1">
+                        <label class="form-check-label" for="donorCount1">1x</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount3" value="donorCount2">
+                        <label class="form-check-label" for="donorCount2">2x</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount3" value="donorCount3">
+                        <label class="form-check-label" for="donorCount3">3x</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount4" value="donorCount4">
+                        <label class="form-check-label" for="donorCount4">4x</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount5" value="donorCount5">
+                        <label class="form-check-label" for="donorCount5">5x</label>
+                    </div>
+                
+                </div>
+            </div>
+
+            <div>
+                <hr>
+            </div>
+            <button type="submit" class="btn tax_button1">Dále</button>
+        </form>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='private1.js') }}"></script> 
+
+{% elif pagenum == 2 %}
+<!-- Zamestnani -->
+
+
+<div class="row tax_form">
+    <div class="col">
+        <form action="/osobni/3">
+            
+            <div>
+                <hr>
+                <h4>Příjem</h4>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <div class="form-group">
+                        <label for="inputName">Jméno</label>
+                        <input type="text" class="form-control" id="inputName" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputIncome">Hrubý roční příjem</label>
+                        <input type="text" class="form-control" id="inputIncome" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputWithhold">Odvedená záloha na dani</label>
+                        <input type="text" class="form-control" id="inputWithhold" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputInsurance">Pojištění</label>
+                        <input type="text" class="form-control" id="inputInsurance" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-4">
+                    <label for="inputName">Typ příjmu</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="income_type" id="income_fullTime" value="Smlouva o pracovní činnosti" checked>
+                        <label class="form-check-label" for="fullTime">
+                            Smlouva o pracovní činnosti
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="income_type" id="income_partTime" value="Dohoda o provedení práce">
+                        <label class="form-check-label" for="partTime">
+                            Dohoda o provedení práce
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="income_type" id="income_gift" value="Dar">
+                        <label class="form-check-label" for="income_gift">
+                            Dar
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <div class="form-group">
+                        <input class="form-check-input" type="checkbox" id="checkTaxDeclaration">
+                        <label class="form-check-label" for="checkTaxDeclaration">
+                            Podepsáno Prohlášení o daní,<br>tj. <i>růžový papír</i>.
+                        </label>
+                    </div>
+
+                    <div class="form-group col-md-1"></div>
+                    <div class="form-group col-md-11" id="taxDeclarationInfo" style="display: none">
+                        <div class="form-group">
+                            <label for="inputTaxedIncome">Příjem podroben srážkové dani</label>
+                            <input type="text" class="form-control" id="inputTaxedIncome" placeholder="">
+                        </div>
+                
+                    </div>
+
+                </div>
+            </div>
+            
+            <div>
+                <hr>
+                <button type="button" class="btn tax_button1" id="addIncome">Přidat příjem</button>
+            </div>
+
+            
+            </head>
+            <body>
+             
+            
+            
+            
+            <div>
+                <hr>
+            </div>
+
+            <button type="submit" class="btn tax_button1">Dále</button>
+        </form>
+    </div>
+</div>
+    
+<script src="{{ url_for('static', filename='private2.js') }}"></script> 
+
+
+{% elif pagenum == 3 %}
+<!-- Dokonceni-->
+
+<form action="/profile">
+
+    <!-- Prohlaseni -->
+    <div>
+        <hr>
+        <h4>Prohlášení</h4>
+    </div>
+    <div class="form-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkCorrectData">
+            <label class="form-check-label" for="checkCorrectData">
+                Potvrzuji, že zadané údaje jsou správně.
+            </label>
+        </div>
+    </div>
+    <button type="submit" class="btn tax_button1">Dokončit</button>
+
+</form>
+{% endif %}
+
+{% endblock %}

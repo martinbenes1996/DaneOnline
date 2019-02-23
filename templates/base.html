@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <!-- JQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
+        <!-- JQuery UI stylesheet -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+        <!-- JQuery UI -->
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        {% block Imports %}{% endblock %}
+
+        <!-- My CSS stylesheet -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css" media="all">
+
+        <title>{% block Title %}{% endblock %} | DaněOnline.cz</title>
+    </head>
+    <body>
+        <script src="{{ url_for('static', filename='init.js') }}"></script> 
+        <div class="container-fluid">
+            <div class="row tax_menurow">
+                <div class="col">
+                    <div class="row">
+                        <div class="col text-left">
+                            <a href="/" class="tax_headline">DaněOnline.cz</a>
+                            
+                        </div>
+                        <div class="col text-right">
+                            <button type="button" class="btn tax_profilebutton">Profil</button>
+                        </div>
+                    </div>
+                    
+                    {% block CreateTaxReturnButton %}
+                    {% endblock %}
+                </div>
+            </div>
+
+                
+            {% block Body %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

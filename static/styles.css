@@ -1,0 +1,102 @@
+
+body {
+    background-color: #f7fff7;
+    color: #292f36;
+}
+
+.tax_headline {
+    font: 30px sans-serif;
+    color: #292f36;
+}
+.tax_headline:hover {
+    color: #292f36;
+}
+
+.tax_menurow {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    color: #f7fff7;
+    background-color: #ffe66d;
+}
+
+.tax_profilebutton {
+    background-color: #f7fff7;
+    border: 2px solid #292f36;
+    -webkit-transition-duration: 0.25s; /* Safari */
+    transition-duration: 0.25s;
+}
+.tax_profilebutton:hover {
+    background-color: #292f36;
+    color: #f7fff7;
+}
+
+.tax_button1 {
+    background-color: #f7fff7;
+    border: 2px solid #274690;
+    color: #274690;
+    -webkit-transition-duration: 0.25s; /* Safari */
+    transition-duration: 0.25s;
+}
+.tax_button1:hover {
+    background-color: #274690;
+    color: #f7fff7;
+}
+
+.tax_button2 {
+    background-color: #f7fff7;
+    border: 2px solid #37996e;
+    color: #37996e;
+    -webkit-transition-duration: 0.25s; /* Safari */
+    transition-duration: 0.25s;
+}
+.tax_button2:hover {
+    background-color: #37996e;
+    color: #f7fff7;
+}
+
+.tax_maincontent {
+    margin-top: 5em;
+}
+
+.tax_center {
+    float: none !important;
+}
+
+.tax_progressbar {
+    margin-top: 1em;
+}
+
+.tax_progressbar_item {
+
+}
+
+.tax_progressbar_item:hover {
+    color: #274690
+}
+
+.tax_progressbar_item_done {
+    color: #37996e;
+}
+
+.tax_progressbar_item_active {
+    color: #274690;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.tax_progressbar_item_todo {
+    color: #292f36
+}
+
+.tax_form {
+    margin-top: 5em;
+    margin-bottom: 10em;
+}
+
+.tax_input_ok {
+    border: 2px solid #37996e;
+}
+
+.tax_input_error {
+    border: 2px solid #c42021;
+}
