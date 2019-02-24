@@ -4,18 +4,77 @@
 {% block Title %}Domů{% endblock %}
 
 {% block Content %}
+
+
+<div class="row tax_info_row">
+    <div class="col"></div>
+    <div class="col text-center tax_info_col" id="info_WhatIs_Button">
+        Co je daňové přiznání?
+    </div>
+    <div class="col text-center tax_info_col" id="info_ShouldI_Button">
+        Musím dávat daňové přiznání?
+    </div>
+    <div class="col tax_info_col"></div>
+</div>
+
 <div class="row">
     <div class="col text-center">
         <a href="osobni/1">
-            <button type="button" class="btn tax_button1">Podávám jen za sebe</button>
+            <button type="button" class="btn btn-lg tax_button1">Podávám jen za sebe</button>
         </a>
         
     </div>
     <div class="col text-center">
         <!--<a href="firemni/1">-->
-            <button type="button" class="btn tax_button2" disabled>Podávám i za firmu</button><br>
+            <button type="button" class="btn btn-lg tax_button2" disabled>Podávám i za firmu</button><br>
         <!--</a>-->
         <label class="form-check-label">Zatím neimplementováno</label>
     </div>
 </div>
+
+<div class="row" id="info_WhatIs" style="margin-top: 3em">
+    <div class="col">
+        <h3>Co je daňové přiznání?</h3>
+        <p class="text-justify">
+        Stát pro nás občany zajišťuje zdánlivě samozřejmé, ale neodmyslitelné podmínky
+        ke spokojenému životu. Počínaje ochranou našeho majetku i nás samotných
+        prostřednictvím policie a armády, přes jistotu, že za odváděnou práci budeme
+        odměňováni i pomoc těm, kteří jí přechodně nebo trvale potřebují. Velmi důležitá
+        je deklarace našich práv, díky kterým víme, co máme od státu, společnosti i
+        každého jednotlivce očekávat.
+        </p>
+        <p class="text-justify">
+        To vše není zadarmo a každý jednotlivý z nás musí část svého úsilí věnovat
+        státu tak, aby umožnil jeho existenci. Tato část se nazývá daň, zde se míní
+        tzv.&nbsp;<i>daň z příjmu fyzických osob</i>, tedy část peněz, kterou dostává
+        pracující jako odměnu za odvedenou práci. V České republice se jedná o
+        <i>20.1 %</i>. Od částky se ale odečítají tzv. slevy, např. za děti,
+        reálně je tedy procento nižší.
+        </p>
+        <p class="text-justify">
+        <b>Daňové přiznání</b> je povinnost občana vůči státu. Občan v tomto dokumentu
+        deklaruje (přiznává) státu příjmy. Vypočítaná daň se poté srovná se zaplacenými
+        zálohami, strhávanými z příjmů v průběhu roku. Případný nedoplatek občan musí
+        uhradit, přeplatek se vrací nebo převádí do dalšího roku.
+        </p>
+    </div>
+</div>
+
+<div class="row" id="info_WhatIs" style="margin-top: 3em">
+    <div class="col">
+        <h3>Musím dávat daňové přiznání?</h3>
+        <p class="text-justify">
+            Daňové přiznání podávat <u>musíte</u>. Existují ale <b>výjimky</b>:
+        </p>
+        <ul class="list-group">
+            <li class="list-group-item">Vaše roční příjmy nepřesáhly 15 000.</li>
+            <li class="list-group-item">U všech zaměstnavatelů jste postupně podepsali Prohlášení k dani (tj. "<i>růžové prohlášení</i>").</li>
+            <li class="list-group-item">Vaše roční příjmy z ostatních činností (podnikání, kapitálový majetek, pronájem) nepřesáhly 6 000.</li>
+            <li class="list-group-item">Máte příjmy pouze ze zahraničí, odkud nepodléhají dvojímu zdanění podle mezinárodní smlouvy.</li>
+        </ul>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='index.js') }}"></script> 
+
 {% endblock %}

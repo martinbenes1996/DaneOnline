@@ -97,7 +97,7 @@ body {
 }
 
 .tax_progressbar_item_todo {
-    color: #292f36
+    color: #292f36;
 }
 
 .tax_form {
@@ -111,4 +111,17 @@ body {
 
 .tax_input_error {
     border: 2px solid #c42021;
+}
+
+.tax_info_row {
+    margin-bottom: 3em;
+}
+
+.tax_info_col {
+    border-left: 1px solid #cccccc;
+}
+
+.tax_info_col:hover {
+    text-decoration: underline;
+    color: #292f36;
 }
