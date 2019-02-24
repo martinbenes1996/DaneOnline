@@ -195,3 +195,6 @@ def address_getLocation(cityCode):
     d = { 'name' : address_getCityName(cityCode), 'region' : json.loads(address_getRegion(cityCode))['name'] }
     return json.dumps(d)
 
+
+if __name__ == '__main__':
+    app.run()
