@@ -87,6 +87,7 @@
                 $("#labelStudent").text("Studentka");
                 $("#labelRetired").text("Důchodkyně");
                 $("#labelMarried").text("Vdaná");
+                $("#labelChild").text("Matka");
                 $("#labelDonor").text("Dárkyně krve");
                 $(".femaleSuffix_a").text("a");
                 $(".femaleSuffix_ka").text("ka");
@@ -100,6 +101,7 @@
                 $("#labelStudent").text("Student");
                 $("#labelRetired").text("Důchodce");
                 $("#labelMarried").text("Ženatý");
+                $("#labelChild").text("Otec");
                 $("#labelDonor").text("Dárce krve");
                 $(".femaleSuffix_a").text("");
                 $(".femaleSuffix_ka").text("");
@@ -268,7 +270,135 @@
         else { inputClear( element ); }
     }
 
+    var childCnt = 0;
+    function addChild() {
+        childCnt += 1;
+        var childIndex = childCnt;
+        //if ( childIndex == 1 ) { $("#inputChild").prop("checked", true); }
+
+        $("<div>").addClass("form-row tax_child").prop("id", "child"+childIndex).append(
+            $("<div>").addClass("form-check col-md-2").append(
+                $("<b>").text(""+childIndex+". dítě")
+            )
+        ).append(
+            $("<div>").addClass("form-check col-md-4").append(
+                $("<input>").addClass("form-check-input")
+                    .prop("type", "checkbox")
+                    .prop("id", "inputChild"+childIndex+"Kindergarden")
+                    .click(function(){ evalCheckShow($("#inputChild"+childIndex+"Kindergarden"), $("#child"+childIndex+"KindergardenInfo")); })
+            ).append(
+                $("<label>").addClass("form-check-label")
+                    .prop("for", "inputChild"+childIndex+"Kindergarden")
+                    .text("Navštěvovalo školku")
+            ).append(
+                $("<div>").addClass("form-group").css("display", "none").prop("id", "child"+childIndex+"KindergardenInfo").append(
+                    $("<input>").addClass("form-check-input")
+                        .prop("type", "checkbox")
+                        .prop("checked", true)
+                        .prop("id", "inputChild"+childIndex+"KindergardenWholeYear")
+                ).append(
+                    $("<label>").addClass("form-check-label")
+                        .prop("for", "inputChild"+childIndex+"DisabledWholeYear")
+                        .text("Celý rok")
+                    )
+            )
+        ).append(
+            $("<div>").addClass("form-check col-md-4").append(
+                $("<input>").addClass("form-check-input")
+                    .prop("type", "checkbox")
+                    .prop("id", "inputChild"+childIndex+"Disabled")
+                    .click(function(){ evalCheckShow($("#inputChild"+childIndex+"Disabled"), $("#child"+childIndex+"DisabledInfo")); })
+            ).append(
+                $("<label>").addClass("form-check-label")
+                    .prop("for", "inputChild"+childIndex+"Disabled")
+                    .text("Držitel ZTP/P")
+            ).append(
+                $("<div>").addClass("form-group").css("display", "none").prop("id", "child"+childIndex+"DisabledInfo").append(
+                    $("<input>").addClass("form-check-input")
+                        .prop("type", "checkbox")
+                        .prop("checked", true)
+                        .prop("id", "inputChild"+childIndex+"DisabledWholeYear")
+                ).append(
+                    $("<label>").addClass("form-check-label")
+                        .prop("for", "inputChild"+childIndex+"DisabledWholeYear")
+                        .text("Celý rok")
+                )
+            )
+        ).append(
+            $("<div>").addClass("form-check col-md-2").append(
+                $("<button>").addClass("btn btn-sm tax_button3")
+                    .prop("type", "button")
+                    .text("Odebrat dítě")
+                    .click(childIndex, function(data){ removeChild(data.data); })
+            )
+        ).insertBefore( $(".child_appender") );
+    }
+
+    function remarkChild(el, index) {
+        el.prop("id", "child"+index);
+        el.find("b").text(""+index+". dítě");
+        el.find("input").each(function(i, el){
+            var regExp = /inputChild[0-9]+([^0-9]+.*)/;
+            var matches = regExp.exec($(el).prop("id"));
+            newid = "inputChild"+index+matches[1];
+            console.log($(el).prop("id") + " > " + newid);
+            $(el).prop("id", newid);
+        });
+        el.find("label").each(function(i, el){
+            var regExp = /inputChild[0-9]+([^0-9]+.*)/;
+            var matches = regExp.exec($(el).prop("for"));
+            newfor = "inputChild"+index+matches[1];
+            console.log($(el).prop("id") + " > " + newfor);
+            $(el).prop("for", newid);
+        });
+        el.find("div").each(function(i, el){
+            if($(el).prop("id").slice(-4) == "Info") {
+                
+                var regExp = /child[0-9]+([^0-9]+.*)/;
+                var matches = regExp.exec($(el).prop("id"));
+                newid = "child"+index+matches[1];
+                console.log($(el).prop("id") + " > " + newid);
+                $(el).prop("id", newid);
+            }
+        });
+        el.find("button").unbind("click");
+        el.find("button").click(index, function(data){
+            removeChild(data.data);
+        });
+        el.find("input#inputChild"+index+"Kindergarden").click( function(){
+            evalCheckShow($("#inputChild"+index+"Kindergarden"), $("#child"+index+"KindergardenInfo"));
+        });
+        el.find("input#inputChild"+index+"Disabled").click( function(){
+            evalCheckShow($("#inputChild"+index+"Disabled"), $("#child"+index+"DisabledInfo"));
+        });
+    }
+
+    function removeChild(index) {
+        if( childCnt == 1 ) {
+            $("#inputChild").prop("checked", false);
+            $("#childInfo").hide();
+            return;
+        }
+        $("#child"+index).remove(); 
+        if(index < childCnt) { 
+            $(".tax_child").each(function(it, el) {
+                for(var i = index+1; i <= childCnt; i++) {
+                    if( $(el).prop("id") == "child"+i) {
+                        remarkChild($(el), i-1);
+                    }
+                }
+                
+            })
+        }
+        childCnt -= 1;
+        console.log("Removed child " + index);
+    }
     
+    $(".child_adder").click(function(){ addChild(); });
+    $("#inputChild").click(function(){ 
+        if( $("#inputChild").prop("checked") ) { $("#childInfo").show(); }
+        else { $("#childInfo").hide(); }
+    });
 
     $("#inputSurname").blur(function(){
         if($("#inputSurname2").val() == "") {
@@ -293,6 +423,16 @@
 
     });
 
+    $("#inputPartnerEarnedLess68000").click(function(){
+        if( ! $("#inputPartnerEarnedLess68000").prop("checked")
+            && $("#inputMarried").prop("checked") ) {
+            
+            $("#inputMarried").prop("checked", false);
+            $("#marriedInfo").hide();
+            alert("Lze uplatnit pouze při příjmu vyživovaného pod 68000.");
+        }
+    });
+
 
     function evalStudent() {
         evalCheckShow($("#inputStudent"), $("#studentInfo"));
@@ -306,10 +446,23 @@
             evalCheckHide($("#inputRetiredWholeYear"), $("#retiredDateRange"))
         }
     }
+    function evalInvalid() {
+        evalCheckShow($("#inputInvalid"), $("#invalidInfo1"));
+        evalCheckShow($("#inputInvalid"), $("#invalidInfo2"));
+        if($("#inputInvalid").prop("checked")) {
+            evalCheckHide($("#inputInvalidWholeYear"), $("#invalidDateRange"));
+        }
+    }
+    function evalChild() {
+        evalCheckShow($("#inputChild"), $("#childInfo"));
+    }
     function evalMarried() { 
         evalCheckShow($("#inputMarried"), $("#marriedInfo")); 
+        evalCheckShow($("#inputMarriedDisabled"), $("#marriedDisabledInfo")); 
         if($("#inputMarried").prop("checked")) {
             evalCheckHide($("#inputMarriedWholeYear"), $("#marriedDateRange"));
+            evalCheckHide($("#inputMarriedDisabledWholeYear"), $("#marriedDisabledDateRange"));
+            $("#inputPartnerEarnedLess68000").prop("checked", true);
         }
     }
     function evalDonor() { evalCheckShow($("#inputDonor"), $("#donorInfo")); }
@@ -317,15 +470,21 @@
     $("#inputStudentWholeYear").click(function() { evalStudent(); });
     $("#inputRetired").click(function() { evalRetired(); });
     $("#inputRetiredWholeYear").click(function() { evalRetired(); });
+    $("#inputInvalid").click(function() { evalInvalid(); });
+    $("#inputInvalidWholeYear").click(function() { evalInvalid(); });
     $("#inputMarried").click(function() { evalMarried(); });
-    $("#inputMarriedWholeYear").click(function() { evalMarried(); })
+    $("#inputMarriedWholeYear").click(function() { evalMarried(); });
+    $("#inputMarriedDisabled").click(function() { evalMarried(); });
+    $("#inputMarriedDisabledWholeYear").click(function() { evalMarried(); });
     $("#inputDonor").click(function() { evalDonor(); });
 
     $( document ).ready(function() {
         console.log( "ready!" );
         evalStudent();
         evalRetired();
+        evalInvalid();
         evalMarried();
+        evalChild();
         evalDonor();
 
         checkName();
@@ -334,9 +493,13 @@
         checkEmail();
         checkPhone();
 
+        addChild();
+
         createDateRangeInput($("#inputStudentFrom"), $("#inputStudentTo"));
         createDateRangeInput($("#inputRetiredFrom"), $("#inputRetiredTo"));
+        createDateRangeInput($("#inputInvalidFrom"), $("#inputInvalidTo"));
         createDateRangeInput($("#inputMarriedFrom"), $("#inputMarriedTo"));
+        createDateRangeInput($("#inputMarriedDisabledFrom"), $("#inputMarriedDisabledTo"));
     });
 
 })(jQuery); 

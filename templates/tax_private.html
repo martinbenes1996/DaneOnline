@@ -134,7 +134,7 @@
             <div>
                 <hr>
                 <h4>Slevy na dani</h4>
-                <p>V minulém roce (alespoň část roku) jsem byl<span class="femaleSuffix_a"></span></p>
+                <p>Za minulý rok (alespoň část roku) uplatňuji následující slevy</p>
             </div>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="inputStudent">
@@ -182,16 +182,60 @@
             </div>
             
             <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="inputInvalid">
+                <label class="form-check-label" for="inputInvalid" id="labelInvalid">Invalida</label>
+            </div>
+            <div class="form-row" id="invalidInfo1" style="display: none">
+                <div class="form-check col-md-1"></div>
+                <div class="form-check col-md-1">
+                        <input class="form-check-input" type="checkbox" value="" id="inputInvalidWholeYear" checked>
+                        <label class="form-check-label" for="inputInvalidWholeYear">Celý rok</label>
+                    </div>
+                <div class="form-check col-md-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="invalidLevel" id="invalidLevel1" value="1">
+                        <label class="form-check-label" for="invalidLevel1">I.</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="invalidLevel" id="invalidLevel2" value="2">
+                        <label class="form-check-label" for="invalidLevel2">II.</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="invalidLevel" id="invalidLevel3" value="3">
+                        <label class="form-check-label" for="invalidLevel3">III.</label>
+                    </div>
+                </div>
+                
+                    <div class="form-check col-md-7" style="display: none" id="invalidDateRange">
+                        <div class="form-check-inline col-md-5">
+                            <label for="inputInvalidFrom" class="form-check-label">Od&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" id="inputInvalidFrom" name="inputInvalidFrom">
+                        </div>
+                        <div class="form-check-inline col-md-5">
+                            <label for="inputInvalidTo" class="form-check-label">Do&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" id="inputInvalidTo" name="inputInvalidTo">
+                        </div>
+                    </div>
+                </div>
+
+            <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="inputMarried">
                 <label class="form-check-label" for="inputMarried" id="labelMarried">Ženatý / vdaná</label>
             </div>
 
             <div class="form-group" id="marriedInfo" style="display: none">
                 <br>
-                <div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
                     <h4>Manžel / ka</h4>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input class="form-check-input" type="checkbox" value="" id="inputPartnerEarnedLess68000" checked>
+                        <label class="form-check-label" for="inputPartnerEarnedLess68000">Vydělal/a za rok 2018 méně než <b>68000</b>.</label>
+                    </div>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="inputName">Křestní jméno</label>
@@ -230,8 +274,47 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-1"></div>
+                    <div class="form-group col-md-2">
+                        <input class="form-check-input" type="checkbox" value="" id="inputMarriedDisabled">
+                        <label class="form-check-label" for="inputMarriedDisabled">Držitel/ka ZTP/P</label>
+                    </div>
+                </div>
+                <div class="form-row" id="marriedDisabledInfo" style="display: none">
+                    <div class="form-check col-md-2"></div>
+                    <div class="form-check col-md-1">
+                        <input class="form-check-input" type="checkbox" value="" id="inputMarriedDisabledWholeYear" checked>
+                        <label class="form-check-label" for="inputMarriedDisabledWholeYear">Celý rok</label>
+                    </div>
+                    <div class="form-group col-md-7" style="display: none" id="marriedDisabledDateRange">
+                        <div class="form-check-inline col-md-5">
+                            <label for="inputMarriedDisabledFrom" class="form-check-label">Od&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" id="inputMarriedDisabledFrom" name="inputMarriedDisabledFrom">
+                        </div>
+                        <div class="form-check-inline col-md-5">
+                            <label for="inputMarriedDisabledFrom" class="form-check-label">Do&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" id="inputMarriedDisabledTo" name="inputMarriedDisabledTo">
+                        </div>
+                    </div>
+                </div>
                 
                 <hr>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="inputChild">
+                <label class="form-check-label" for="inputChild" id="labelChild">Otec / matka</label>
+            </div>
+            <div class="form-group" id="childInfo" style="margin-top: 1em; display: none">
+                <div class="form-check col-md-1"></div>
+                <div class="form-check col-md-11">
+                    <div class="form-row child_appender" style="margin-top: 0.5em">
+                        <button type="button" class="btn btn-sm tax_button1 child_adder">Přidat dítě</button>
+                    </div>
+                </div>
             </div>
 
             <div class="form-check">
@@ -242,23 +325,23 @@
                 <div class="form-check col-md-1"></div>
                 <div class="form-check col-md-4">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount1" value="donorCount1">
+                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount1" value="1">
                         <label class="form-check-label" for="donorCount1">1x</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount3" value="donorCount2">
+                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount3" value="2">
                         <label class="form-check-label" for="donorCount2">2x</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount3" value="donorCount3">
+                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount3" value="3">
                         <label class="form-check-label" for="donorCount3">3x</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount4" value="donorCount4">
+                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount4" value="4">
                         <label class="form-check-label" for="donorCount4">4x</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount5" value="donorCount5">
+                        <input class="form-check-input" type="radio" name="donorCount" id="donorCount5" value="5">
                         <label class="form-check-label" for="donorCount5">5x</label>
                     </div>
                 

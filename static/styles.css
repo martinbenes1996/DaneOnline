@@ -54,6 +54,18 @@ body {
     color: #f7fff7;
 }
 
+.tax_button3 {
+    background-color: #f7fff7;
+    border: 2px solid #c42021;
+    color: #c42021;
+    -webkit-transition-duration: 0.25s; /* Safari */
+    transition-duration: 0.25s;
+}
+.tax_button3:hover {
+    background-color: #c42021;
+    color: #f7fff7;
+}
+
 .tax_maincontent {
     margin-top: 5em;
 }
