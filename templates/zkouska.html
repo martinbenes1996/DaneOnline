@@ -1,0 +1,155 @@
+
+{% extends "page.html" %}
+
+{% block Title %}Osobní přiznání{% endblock %}
+
+{% block Imports %}{% endblock %}
+
+{% block Content %}
+<div class="row">
+    <div class="col text-center">
+        <h2>Osobní daňové přiznání</h2>
+    </div>
+</div>
+<div class="row text-center tax_progressbar">
+    <div class="col">
+        <a href="/osobni/1" class="tax_progressbar_item {% if pagenum > 1 %}tax_progressbar_item_done{% else %}tax_progressbar_item_active{% endif %}">Základní informace</a>
+    </div>
+    <div class="col"><h5>></h5></div>
+    <div class="col">
+        <a href="/osobni/2" class="tax_progressbar_item {% if pagenum > 2 %}tax_progressbar_item_done{% elif pagenum < 2 %}tax_progressbar_item_todo{% else %}tax_progressbar_item_active{% endif %}">Příjmy</a>
+    </div>
+    <div class="col"><h5>></h5></div>
+    <div class="col">
+        <a href="/osobni/3" class="tax_progressbar_item {% if pagenum < 3 %}tax_progressbar_item_todo{% else %}tax_progressbar_item_active{% endif %}">Dokončení</a>
+    </div>
+</div>
+
+
+{% if pagenum == 1 %}
+<!-- Zakladni informace -->
+
+<div class="row tax_form" id="PrivateForm1"></div>
+<!-- Load our React component. -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script type="text/babel" src="{{ url_for('static', filename='FormUI.js') }}"></script>
+<script type="text/babel" src="{{ url_for('static', filename='FormLoader.js') }}"></script>
+<script type="text/babel" src="{{ url_for('static', filename='Forms.js') }}"></script>
+
+{% elif pagenum == 2 %}
+<!-- Zamestnani -->
+
+
+<div class="row tax_form">
+    <div class="col">
+        <form action="/osobni/3">
+            
+            <div>
+                <hr>
+                <h4>Přidat příjem</h4>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <div class="form-group">
+                        <label for="inputName">Jméno</label>
+                        <input type="text" class="form-control" id="inputName" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputIncome">Hrubý roční příjem</label>
+                        <input type="text" class="form-control" id="inputIncome" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputWithhold">Odvedená záloha na dani</label>
+                        <input type="text" class="form-control" id="inputWithhold" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputInsurance">Pojištění</label>
+                        <input type="text" class="form-control" id="inputInsurance" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-4">
+                    <label for="inputName">Typ příjmu</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="income_type" id="income_fullTime" value="Smlouva o pracovní činnosti" checked>
+                        <label class="form-check-label" for="fullTime">
+                            Smlouva o pracovní činnosti
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="income_type" id="income_partTime" value="Dohoda o provedení práce">
+                        <label class="form-check-label" for="partTime">
+                            Dohoda o provedení práce
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="income_type" id="income_gift" value="Dar">
+                        <label class="form-check-label" for="income_gift">
+                            Dar
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <div class="form-group">
+                        <input class="form-check-input" type="checkbox" id="checkTaxDeclaration">
+                        <label class="form-check-label" for="checkTaxDeclaration">
+                            Podepsáno Prohlášení o daní,<br>tj. <i>růžový papír</i>.
+                        </label>
+                    </div>
+
+                    <div class="form-group col-md-1"></div>
+                    <div class="form-group col-md-11" id="taxDeclarationInfo" style="display: none">
+                        <div class="form-group">
+                            <label for="inputTaxedIncome">Příjem podroben srážkové dani</label>
+                            <input type="text" class="form-control" id="inputTaxedIncome" placeholder="">
+                        </div>
+                
+                    </div>
+                </div>
+            
+            </div>
+
+            <div class="form-row">
+                <button type="button" class="btn tax_button1" id="addIncome">Přidat příjem</button>
+            </div>
+
+
+            
+            
+            
+            <div>
+                <hr>
+            </div>
+
+            <button type="submit" class="btn tax_button1">Dále</button>
+        </form>
+    </div>
+</div>
+    
+<script src="{{ url_for('static', filename='private2.js') }}"></script> 
+
+
+{% elif pagenum == 3 %}
+<!-- Dokonceni-->
+
+<form action="/profile">
+
+    <!-- Prohlaseni -->
+    <div>
+        <hr>
+        <h4>Prohlášení</h4>
+    </div>
+    <div class="form-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkCorrectData">
+            <label class="form-check-label" for="checkCorrectData">
+                Potvrzuji, že zadané údaje jsou správně.
+            </label>
+        </div>
+    </div>
+    <button type="submit" class="btn tax_button1">Dokončit</button>
+
+</form>
+{% endif %}
+
+{% endblock %}
